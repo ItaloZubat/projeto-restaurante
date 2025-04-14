@@ -13,13 +13,22 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Zipar os arquivos
+      - name: Criar site.zip com arquivos direto da raiz
         run: |
-          zip site.zip index.html style.css script.js
+          mkdir temp-site
+          cp index.html style.css script.js temp-site/
+          cd temp-site
+          zip -r ../site.zip .
+          cd ..
+          rm -rf temp-site
 
-      - name: Deploy via publish profile
+      - name: Login no Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy no Azure App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: app-sabor-caseiro
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: site.zip
