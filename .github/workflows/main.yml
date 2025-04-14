@@ -13,12 +13,13 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Criar estrutura de pastas para o site
-        run: |
-          mkdir -p site
-          cp index.html style.css script.js site/
+      - name: Criar diretório temporário
+        run: mkdir site
 
-      - name: Compactar em site.zip com pasta 'site'
+      - name: Mover arquivos para pasta 'site'
+        run: mv index.html style.css script.js site/
+
+      - name: Compactar pasta 'site'
         run: zip -r site.zip site
 
       - name: Login no Azure
