@@ -13,8 +13,14 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Zipar o conteúdo do projeto
-        run: zip -r site.zip . -x ".git/*" -x ".github/*"
+      - name: Criar pasta de build
+        run: mkdir build
+
+      - name: Copiar arquivos do site para pasta de build
+        run: cp index.html style.css script.js -t build/
+
+      - name: Compactar arquivos
+        run: zip -r site.zip ./build
 
       - name: Login no Azure
         uses: azure/login@v1
