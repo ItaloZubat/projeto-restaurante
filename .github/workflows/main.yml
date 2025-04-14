@@ -13,9 +13,14 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Compactar arquivos direto da raiz (sem pasta!)
+      - name: Criar site.zip com arquivos direto da raiz
         run: |
-          zip site.zip index.html style.css script.js
+          mkdir temp-site
+          cp index.html style.css script.js temp-site/
+          cd temp-site
+          zip -r ../site.zip .
+          cd ..
+          rm -rf temp-site
 
       - name: Login no Azure
         uses: azure/login@v1
