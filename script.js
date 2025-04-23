@@ -4,7 +4,7 @@ document.getElementById('reservaForm').addEventListener('submit', function(e) {
   const data = document.getElementById('dataReserva').value;
 
   const dataFormatada = new Date(data).toLocaleDateString('pt-BR');
-
+  
   const li = document.createElement('li');
   li.textContent = `Reserva feita para ${nome} em ${dataFormatada}`;
   document.getElementById('listaReservas').appendChild(li);
